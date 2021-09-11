@@ -34,6 +34,8 @@ bash /conf/shadowsocks-libev_config.json >  /etc/shadowsocks-libev/config.json
 echo /etc/shadowsocks-libev/config.json
 cat /etc/shadowsocks-libev/config.json
 
+htpasswd -b -c /etc/nginx/pwd ${QR_User} ${QR_Pass}
+mkdir /tmp/cache
 bash /conf/nginx_ss.conf > /etc/nginx/conf.d/ss.conf
 echo /etc/nginx/conf.d/ss.conf
 cat /etc/nginx/conf.d/ss.conf
@@ -46,7 +48,8 @@ else
   plugin=$(echo -n "v2ray;path=/${V2_Path};host=${DOMAIN};tls" | sed -e 's/\//%2F/g' -e 's/=/%3D/g' -e 's/;/%3B/g')
   ss="ss://$(echo -n ${ENCRYPT}:${PASSWORD} | base64 -w 0)@${DOMAIN}:443?plugin=${plugin}" 
   echo "${ss}" | tr -d '\n' > /wwwroot/${QR_Path}/index.html
-  echo -n "${ss}" | qrencode -s 6 -o /wwwroot/${QR_Path}/vpn.png
+  echo -n "<br><br><img src='${QR_Path}/qr.png'>" >> /wwwroot/${QR_Path}/index.html
+  echo -n "${ss}" | qrencode -s 6 -o /wwwroot/${QR_Path}/qr.png
 fi
 
 ss-server -c /etc/shadowsocks-libev/config.json &

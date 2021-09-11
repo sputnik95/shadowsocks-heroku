@@ -25,6 +25,21 @@
     "QR_Path": {
        "description": "QR code and configuration link path, the default qr_img, you can also use uuid for confidentiality, but it cannot be the same as V2_Path. If the AppName variable is no, this variable has no effect",
        "value": "/qr"
+     },
+
+    "QR_User": {
+       "description": "QR code page auth username",
+       "value": "ss"
+     },
+
+    "QR_Pass": {
+       "description": "QR code page auth password",
+       "value": "c16f96e0-f752-4b64-a812-fcf2da707fc5"
+     },
+
+    "Proxy_Path": {
+       "description": "Site to proxy when trying to access urls other than QR_path",
+       "value": "https://google.com/"
      }
   },
   "website": "",
