@@ -17,7 +17,7 @@ fi
 echo ${V2_Path}
 
 if [[ -z "${QR_Path}" ]]; then
-  export QR_Path="/qr_img"
+  export QR_Path="/getconfig"
 fi
 echo ${QR_Path}
 
