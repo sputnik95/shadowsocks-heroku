@@ -35,6 +35,7 @@ echo /etc/shadowsocks-libev/config.json
 cat /etc/shadowsocks-libev/config.json
 
 htpasswd -b -c /etc/nginx/pwd ${QR_User} ${QR_Pass}
+rm -rf /tmp/cache/*
 mkdir /tmp/cache
 bash /conf/nginx_ss.conf > /etc/nginx/conf.d/ss.conf
 echo /etc/nginx/conf.d/ss.conf
