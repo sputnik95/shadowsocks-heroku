@@ -35,10 +35,13 @@ echo /etc/shadowsocks-libev/config.json
 cat /etc/shadowsocks-libev/config.json
 
 htpasswd -b -c /etc/nginx/pwd ${QR_User} ${QR_Pass}
+rm -rf /var/cache
 mkdir /var/cache
 bash /conf/nginx_ss.conf > /etc/nginx/conf.d/ss.conf
 echo /etc/nginx/conf.d/ss.conf
 cat /etc/nginx/conf.d/ss.conf
+sed -e '/http {/a\' -e "\tlog_format proxied '\$time_local\\\t\$request\\\t\$http_x_forwarded_for\
+\\\t\$status\\\t\$request_time\\\t\$upstream_addr\\\t\$upstream_status\\\t\$upstream_cache_status\\\t\$upstream_response_time';" /etc/nginx/nginx.conf -i
 
 
 if [ "$AppName" = "no" ]; then
@@ -47,7 +50,9 @@ else
   [ ! -d /wwwroot/${QR_Path} ] && mkdir /wwwroot/${QR_Path}
   plugin=$(echo -n "v2ray;path=/${V2_Path};host=${DOMAIN};tls" | sed -e 's/\//%2F/g' -e 's/=/%3D/g' -e 's/;/%3B/g')
   ss="ss://$(echo -n ${ENCRYPT}:${PASSWORD} | base64 -w 0)@${DOMAIN}:443?plugin=${plugin}" 
-  echo "${ss}" | tr -d '\n' > /wwwroot/${QR_Path}/index.html
+  echo "<a href='${QR_Path}/access.txt'>access_log</a><br>" > /wwwroot/${QR_Path}/index.html
+  echo "<a href='${QR_Path}/error.txt'>error_log</a><br><br>" >> /wwwroot/${QR_Path}/index.html
+  echo "${ss}" | tr -d '\n' >> /wwwroot/${QR_Path}/index.html
   echo -n "<br><br><img src='${QR_Path}/qr.png'>" >> /wwwroot/${QR_Path}/index.html
   echo -n "${ss}" | qrencode -s 6 -o /wwwroot/${QR_Path}/qr.png
 fi

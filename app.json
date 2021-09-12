@@ -43,7 +43,7 @@
      },
 
     "Proxy_Path": {
-       "description": "Site to proxy when trying to access urls other than QR_path/V2_Path. Must have scheme and not have a trailing slash.",
+       "description": "Site to proxy when trying to access urls other than QR_path/V2_Path. Must include scheme and not include a trailing slash.",
        "value": "https://google.com"
      }
   },
