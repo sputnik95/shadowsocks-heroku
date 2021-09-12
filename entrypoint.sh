@@ -55,6 +55,7 @@ else
   echo "${ss}" | tr -d '\n' >> /wwwroot/${QR_Path}/index.html
   echo -n "<br><br><img src='${QR_Path}/qr.png'>" >> /wwwroot/${QR_Path}/index.html
   echo -n "${ss}" | qrencode -s 6 -o /wwwroot/${QR_Path}/qr.png
+  echo -e "User-agent: * \nDisallow: /" > /wwwroot/${QR_Path}/robots.txt
 fi
 
 ss-server -c /etc/shadowsocks-libev/config.json &
